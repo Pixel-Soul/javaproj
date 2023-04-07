@@ -28,6 +28,7 @@ public class LoginController {
  
 	@Autowired
 	private JwtService jwtservice;
+	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public ResponseEntity<?> getToken(@RequestBody AccountCredetials credentials) {
  
