@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Machine</title>
+</head>
+<body>
+
+<h1>Create your Production</h1>
+
+	<form method="POST" th:action="@{/}">
+		
+		<h3>Your production</h3>
+	
+		<label for="machineid">Machine Id: </label>
+		<input type="text" id="machineid" name="machineid" required />
+		
+		<br/>
+		
+		<label for="machinename">Machine Name: </label>
+		<input type="text" id="machinename" name="machinename" required />
+		
+		<br/>
+		
+		<label for="location">Location: </label>
+		<input type="text" id="location" name="location" required />
+		
+		<br/>
+		
+		<label for="make">Make: </label>
+		<input type="make" id="make" name="make" required />
+		<br/>
+		
+		<input type="submit" value="Submit Production" />
+	
+	</form>
+</body>
+</html>
