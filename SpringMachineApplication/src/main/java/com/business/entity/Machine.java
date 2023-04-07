@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Classe JPA che mappa le istanze di Machine sul DB
  * 
@@ -23,6 +25,7 @@ public class Machine {
 	private String machinename;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "machine", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Production> prod = new ArrayList<>();
 
 	public Machine(String machinename) {

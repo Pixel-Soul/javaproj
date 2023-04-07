@@ -38,6 +38,13 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 			filterChain.doFilter(request, response);
 			return;
 		}
+		
+		
+		//Filtro per consentire dashboard
+		if(request.getRequestURI().equals("/dashboard.html")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
  
 		String jws = request.getHeader(HttpHeaders.AUTHORIZATION);
  

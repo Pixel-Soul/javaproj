@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Production Dashboard</title>
+
+<style type="text/css">
+
+table{
+ border-collapse: collapse;
+ width: 100%;
+ max-width: 800px;
+ margin: 0 auto;
+ font-size: 16px;
+}
+table th,
+table td {
+  padding: 8px;
+  text-align: center;
+}
+
+table th {
+	font-weight: bold;
+	background-color: #f7f7f7;
+	color: #333;
+	border: 1px solid #ccc; 
+}
+
+</style>
+
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+//token variable
+let t;
+
+async function login() {
+   let c = {username:"admin", password:"admin"} //credentials
+   let response = await fetch("http://localhost:8081/login", {
+       method:"POST",
+       body: JSON.stringify(c)
+       , headers: new Headers({"Content-type":"application/json"})
+   })
+   
+   if (!response.ok) throw new Error(response.statusText);
+    let r = await response.text();
+
+   for (var pair of response.headers.entries()) { // accessing the entries
+       if (pair[0] == "authorization")
+        t = pair[1]; //get the token
+	}
+}
+
+
+
+async function getData() {
+   let authHeaders = new Headers();
+   authHeaders.set("Authorization", t);
+   var location = document.getElementById('location').value;
+   let response = await fetch("http://localhost:8081/factorydata/"+location, {headers:authHeaders});
+   let r = await response.json();
+   table(r); //ritorna un array
+}
+
+function table(dataArray){
+	var table = document.getElementById('table');
+	table.innerHTML = "";
+	var header = table.createTHead().insertRow(0);
+	header.insertCell().innerHTML = "machinename";
+	header.insertCell().innerHTML = "location";
+	header.insertCell().innerHTML = "hourOfDay";
+	header.insertCell().innerHTML = "make";
+	
+	for(var i = 0; i < dataArray.length; i++){
+		var row = table.insertRow();
+		row.insertCell().innerHTML = dataArray[i].machine.machinename;
+		row.insertCell().innerHTML = dataArray[i].location;
+		row.insertCell().innerHTML = dataArray[i].hourOfDay;
+		row.insertCell().innerHTML = dataArray[i].make;
+		
+		
+		
+	}
+	
+	setInterval(getData(), 1000);
+	
+}
+
+
+window.onload = function(){ login(); }
+
+</script>
+
+<h1>Production Dashboard</h1>
+<input type="text" id='location' name="location" value="location" onkeypress='getData()'>
+
+
+<table id="table"></table>
+
+</body>
+</html>

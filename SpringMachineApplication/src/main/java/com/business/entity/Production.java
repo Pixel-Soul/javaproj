@@ -2,6 +2,8 @@ package com.business.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Classe JPA che mappa le istanze di Production sul DB
  * 

@@ -102,7 +102,6 @@ public class ConsumerSensor implements Runnable{
 				    
 				    prod.computeIfAbsent(idMachine, k-> new ArrayList<>()).add(make);
 				    
-				    //ch.basicAck(envelope.getDeliveryTag(), false);
 		   		}
 		};
 		ch.basicConsume("make", true, consumer);
@@ -131,7 +130,7 @@ public class ConsumerSensor implements Runnable{
 			ps.executeUpdate();
 			*/
 			Production production = new Production();
-			production.setHourOfDay(lastHour);
+			production.setHourOfDay(lastHour%24);
 			production.setLocation(getRandomCity());
 			
 			Machine machine = machineRepo.findById(id).orElseThrow();
@@ -155,12 +154,12 @@ public class ConsumerSensor implements Runnable{
 			public void run() {
 				try {
 					take();
-					
+					sendToDB();
 				} catch (IOException | TimeoutException e) {
 					e.printStackTrace();
 				}
 			}
 		}, 0, INTERVAL);
-		sendToDB();
+		
 	}
 }

@@ -94,6 +94,14 @@
 		    <version>5.16.0</version>
 		</dependency>
 		
+		<!-- Thymeleaf -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		    <version>3.0.5</version>
+		</dependency>
+
+		
 		
 	</dependencies>
 
