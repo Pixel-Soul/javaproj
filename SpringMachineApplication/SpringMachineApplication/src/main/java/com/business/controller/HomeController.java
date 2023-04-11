@@ -71,8 +71,11 @@ public class HomeController {
 				ps.setString(2, machinename);			
 			
 				ResultSet rs = ps.executeQuery();
-				if(!rs.next())
+				if(!rs.next()) {
+					System.out.println("Non esiste machine corrispondente nel DB");
 					throw new Exception();
+				
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

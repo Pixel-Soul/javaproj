@@ -4,37 +4,99 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Machine</title>
+<title>Create Production</title>
+
+
+<style type="text/css">
+body {
+  font-family: sans-serif, Arial;
+  display:flex; flex-direction:column; justify-content:center;
+  min-height:100vh;
+  background: linear-gradient(to right, #e6e6e6, #ffffff);
+}
+
+form {
+background-color: white;
+	vertical-align: middle;
+	text-align: center;
+	-moz-box-shadow:  10px  10px 5px #dedede;
+  	-webkit-box-shadow:  10px  10px 5px #dedede;
+  	box-shadow: 10px 10px 5px #dedede;
+  	border: 1px solid gray;
+}
+
+div {
+	vertical-align: middle;
+	text-align: center;
+	margin-bottom: 10px;
+	
+}
+
+h3 { 
+padding-top: 8px;
+	vertical-align: middle;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+label { 
+	width: 150px;
+	display: inline-block;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+input { 
+	display: inline-block;
+	padding:10px;
+  	border-radius:10px;
+}
+
+</style>
+
+
 </head>
 <body>
-
+<div>
 <h1>Create your Production</h1>
 
+</div>
+<br/>
+<table>
+<tr>
+<td>
+
+</td>
+
+<td>
 	<form method="POST" th:action="@{/}">
 		
-		<h3>Your production</h3>
-	
-		<label for="machineid">Machine Id: </label>
+		<h3>Insert your production</h3>
+	<div>
+		<label for="machineid">Machine Id</label>
 		<input type="text" id="machineid" name="machineid" required />
 		
-		<br/>
+	</div>
+	<div>
 		
-		<label for="machinename">Machine Name: </label>
+		<label for="machinename">Machine Name</label>
 		<input type="text" id="machinename" name="machinename" required />
+		</div>
 		
-		<br/>
-		
-		<label for="location">Location: </label>
+		<div>
+		<label for="location">Location</label>
 		<input type="text" id="location" name="location" required />
+		</div>
 		
-		<br/>
-		
-		<label for="make">Make: </label>
-		<input type="make" id="make" name="make" required />
-		<br/>
-		
-		<input type="submit" value="Submit Production" />
-	
+		<div>
+		<label for="make">Make</label>
+		<input type="text" id="make" name="make" required />
+		</div>
+		<div>		
+		<input type="Submit" value="Send" />
+	</div>
 	</form>
+	</td>
+	</tr>
+	</table>
 </body>
 </html>

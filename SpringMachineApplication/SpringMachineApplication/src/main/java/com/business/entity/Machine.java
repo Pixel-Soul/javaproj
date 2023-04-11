@@ -25,7 +25,7 @@ public class Machine {
 	@NotBlank(message="Machine id is required")
 	private Integer machineid;
 	
-	@Pattern(regexp = "[A-Z0-9]", message="Invalid format")
+	@Pattern(regexp = "[A-Z0-9]", message="Invalid format machine name")
 	@Size(max = 10, min = 10, message = "Must be 10")
 	@Column(nullable = false, name = "name")
 	private String machinename;

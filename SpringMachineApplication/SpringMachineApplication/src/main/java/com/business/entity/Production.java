@@ -3,6 +3,7 @@ package com.business.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * Classe JPA che mappa le istanze di Production sul DB
@@ -25,6 +26,7 @@ public class Production {
 	private String location;
 	
 	@Column(nullable = false, name="hoursofday")
+	@Size(max = 0, min = 23, message = "Error on hour format")
 	private int hourOfDay;
 	
 	@Min(value = 0, message="Min make error")

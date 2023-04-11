@@ -42,7 +42,7 @@ public class ConsumerSensor implements Runnable{
 	private ProductionRepository productionRepo;
 	
 	private final String QUEUE_NAME = "make";
-	private final int INTERVAL = 5000;
+	private final int INTERVAL = 30000;
 	
 	private ConnectionFactory factory;
 	

@@ -39,7 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 			return;
 		}
 		
-		if(request.getRequestURI().equals("/design/")) {
+		if(request.getRequestURI().equals("production.jpg")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
