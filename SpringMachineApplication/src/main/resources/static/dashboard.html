@@ -6,24 +6,56 @@
 
 <style type="text/css">
 
-table{
- border-collapse: collapse;
- width: 100%;
- max-width: 800px;
- margin: 0 auto;
- font-size: 16px;
-}
-table th,
-table td {
-  padding: 8px;
-  text-align: center;
+body {
+  font-family: sans-serif, Arial;
+  display:flex; flex-direction:column; justify-content:center;
+  min-height:100vh;
+  background: linear-gradient(to right, #e6e6e6, #ffffff);
 }
 
-table th {
-	font-weight: bold;
-	background-color: #f7f7f7;
-	color: #333;
-	border: 1px solid #ccc; 
+div {
+	vertical-align: middle;
+	text-align: center;
+	-moz-box-shadow:  10px  10px 5px #dedede;
+  	-webkit-box-shadow:  10px  10px 5px #dedede;
+  	filter: progid:DXImageTransform.Microsoft.Shadow(color='#dedede', Direction=135, Strength=10);
+  	box-shadow: 10px 10px 5px #dedede;
+}
+
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  font-size: 14px;
+  margin: 20px 0;
+  
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+thead {
+  background-color: #ddd;
+  color: white;
+  font-size: 0.875rem;
+	text-transform: uppercase;
+	letter-spacing: 2%;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #eee;
+}
+
+thead th {
+  width: 25%;
 }
 
 </style>
@@ -62,18 +94,23 @@ async function getData() {
    var location = document.getElementById('location').value;
    let response = await fetch("http://localhost:8081/factorydata/"+location, {headers:authHeaders});
    let r = await response.json();
-   table(r); //ritorna un array
+   table(r);
 }
 
 function table(dataArray){
 	var table = document.getElementById('table');
 	table.innerHTML = "";
 	var header = table.createTHead().insertRow(0);
-	header.insertCell().innerHTML = "machinename";
-	header.insertCell().innerHTML = "location";
-	header.insertCell().innerHTML = "hourOfDay";
-	header.insertCell().innerHTML = "make";
+	header.insertCell().innerHTML = "Machine Name";
+	header.insertCell().innerHTML = "Location";
+	header.insertCell().innerHTML = "Hour";
+	header.insertCell().innerHTML = "Summake";
 	
+	if(dataArray.length!==0){
+		setLocationOnStorage();
+	}
+	
+	table = table.createTBody();
 	for(var i = 0; i < dataArray.length; i++){
 		var row = table.insertRow();
 		row.insertCell().innerHTML = dataArray[i].machine.machinename;
@@ -85,17 +122,60 @@ function table(dataArray){
 		
 	}
 	
-	setInterval(getData(), 1000);
-	
 }
 
+setInterval(function(){ 
+	if(t!==undefined){
+		console.log(t);
+		getData();
+	}
+	
+	}, 1000);
 
-window.onload = function(){ login(); }
+//Gestione Cookie
+
+ function setLocationOnStorage(){  
+	localStorage.setItem('lastLocation', document.getElementById('location').value); 
+ }  
+
+ function getLocationByStorage()  
+ {  
+	 var lastLocation = localStorage.getItem('lastLocation');
+	 if (lastLocation) {
+	   // popola automaticamente la casella di testo Location
+	   document.getElementById('location').value = lastLocation;
+	   // avvia immediatamente la nuova interrogazione del servizio web
+	   getData();
+	 } 
+ }  
+
+ 
+ function cleanStorage()  
+ {  
+	 localStorage.removeItem('lastLocation'); 
+ }  
+
+
+
+
+
+
+window.onload = function(){ 
+	getLocationByStorage();
+	}
 
 </script>
-
+<div style="text-align:center">
 <h1>Production Dashboard</h1>
-<input type="text" id='location' name="location" value="location" onkeypress='getData()'>
+</div>
+
+<div>
+<button onclick="login()">Login</button>
+<button onclick="getData()">Take Data</button>
+<button onclick="cleanStorage()">Clean Storge</button>
+</div>
+
+<input type="text" id='location' name="location" value="location" placeholder="Location..">
 
 
 <table id="table"></table>

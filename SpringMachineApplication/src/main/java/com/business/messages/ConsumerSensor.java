@@ -1,10 +1,6 @@
 package com.business.messages;
 
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,7 +14,6 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.rabbitmq.client.Channel;
@@ -41,16 +36,12 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 @Component
 public class ConsumerSensor implements Runnable{
 	
-	//@Autowired
+	
 	private MachineRepository machineRepo;
-	//@Autowired
 	private ProductionRepository productionRepo;
 	
-	private final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private final String URL = "jdbc:mysql://localhost:3306/machinedb";
-	
 	private final String QUEUE_NAME = "make";
-	private final int INTERVAL = 5000;
+	private final int INTERVAL = 30000;
 	
 	private ConnectionFactory factory;
 	
@@ -59,7 +50,7 @@ public class ConsumerSensor implements Runnable{
 	private int lastHour;
 	
 	
-	private enum Cities{
+	public enum Cities{
 		ROME,
 		MILAN,
 		BOLOGNA,
@@ -121,14 +112,6 @@ public class ConsumerSensor implements Runnable{
 		for(Integer id : prod.keySet()) {
 			
 			Integer makeAggr = prod.get(id).stream().reduce(Integer::sum).get();
-			/*
-			PreparedStatement ps = c.prepareStatement("INSERT INTO production (location, hoursofday, production_number, machine) values (?,?,?,?)");
-			ps.setString(1, getRandomCity());
-			ps.setInt(2, lastHour);			
-			ps.setInt(3, makeAggr);
-			ps.setInt(4, id);
-			ps.executeUpdate();
-			*/
 			Production production = new Production();
 			production.setHourOfDay(lastHour%24);
 			production.setLocation(getRandomCity());

@@ -26,7 +26,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class ProducerSensor implements Runnable{
 	
 	private final String QUEUE_NAME = "make";
-	private final int INTERVAL = 1000;
+	private final int INTERVAL = 5000;
 	
 	@Autowired
 	public MachineRepository repo;
@@ -46,14 +46,16 @@ public class ProducerSensor implements Runnable{
 	}
 	
 	public void send(Integer machineId) throws IOException, TimeoutException {
+		
+		try (
 		Connection c = factory.newConnection();
 		Channel ch = c.createChannel();
+		){
 		Random random = new Random();
 		Integer maked = random.nextInt(100);
 		String payload =  machineId + "_" + maked;
 		ch.basicPublish("", QUEUE_NAME, null, payload.getBytes("UTF-8"));
-		ch.close();
-		c.close(); 
+		}
 	}
 	
 	@Override

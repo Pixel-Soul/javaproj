@@ -13,14 +13,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
  
-import com.business.security.JwtService;
  
 
 /**
  * Filtro per gestire le richieste al server
  * 
- * Controlla se l'origine della richiesta è autorizzata e nel caso chiede il login
- * In caso la richiesta non sia autorizzata solleverà un eccezione 
+ * Controlla se la richiesta è autorizzata, In caso non lo fosse solleverà un eccezione 
  *
  */
 @Component
@@ -32,7 +30,7 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request
 			, HttpServletResponse response, FilterChain filterChain)throws ServletException, IOException {
- 
+		
  
 		if(request.getRequestURI().equals("/login")) {
 			filterChain.doFilter(request, response);
@@ -42,6 +40,19 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 		
 		//Filtro per consentire dashboard
 		if(request.getRequestURI().equals("/dashboard.html")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+		
+		
+		//Filtro per consentire /
+		if(request.getRequestURI().equals("/")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		//Filtro per consentire favicon.ico
+		if(request.getRequestURI().equals("/favicon.ico")) {
 			filterChain.doFilter(request, response);
 			return;
 		}

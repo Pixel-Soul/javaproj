@@ -1,7 +1,5 @@
 package com.business.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.business.entity.Production;
 import com.business.repository.ProductionRepository;
 
+/**
+ * Controller di supporto
+ * 
+ */
 @RestController
 public class ProductionController {
 
@@ -22,8 +24,6 @@ public class ProductionController {
 	@CrossOrigin(origins = "http://localhost:8081")
 	@RequestMapping("/factorydata/{location}")
 	public Iterable<Production> getLocation(@PathVariable String location) throws ServletException {
-		System.out.println("========>"+location);
 		return repository.findByLocation(location);
-		//return new ArrayList();
 	}
 }

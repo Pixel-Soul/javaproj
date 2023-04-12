@@ -11,10 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
  
-// import com.business.cardatabase.domain.User;
-import com.business.security.UserRepository;
- 
-
 /**
  * 
  * Classe di supporto per autorizzazione login

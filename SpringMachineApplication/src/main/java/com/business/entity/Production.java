@@ -1,8 +1,13 @@
 package com.business.entity;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Classe JPA che mappa le istanze di Production sul DB
@@ -14,7 +19,7 @@ public class Production {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false, name = "id")
-	private Integer id;
+	private int id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "machine")
@@ -24,7 +29,7 @@ public class Production {
 	private String location;
 	
 	@Column(nullable = false, name="hoursofday")
-	private int hourOfDay;
+	private int hourOfDay = 0;
 	
 	@Column(nullable = false, name="productionNumber")
 	private int make;

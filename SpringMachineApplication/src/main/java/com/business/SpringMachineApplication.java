@@ -6,7 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
+import com.business.entity.Machine;
+import com.business.entity.Production;
 import com.business.messages.ConsumerSensor;
 import com.business.messages.ProducerSensor;
 import com.business.repository.MachineRepository;
@@ -33,9 +34,9 @@ public class SpringMachineApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("===========> START APP");
-	
-		/*
+		System.out.println("===========> APP STARTED");
+	/*
+		
 		//Creazione delle macchine (Eseguire solo prima volta con DB vuoto)
 		Machine m1 = new Machine("LSD23431OP");
 		Machine m2 = new Machine("LLOPRER13P");
@@ -48,7 +49,6 @@ public class SpringMachineApplication implements CommandLineRunner{
 		machineRepo.save(m4);
 		*/
 		
-		
 		ProducerSensor producerSensor = new ProducerSensor();
 		Thread producer = new Thread(producerSensor);
 		producer.start();
@@ -56,10 +56,6 @@ public class SpringMachineApplication implements CommandLineRunner{
 		ConsumerSensor consumerSensor = new ConsumerSensor(machineRepo,productionRepo);
 		Thread consumer = new Thread(consumerSensor);
 		consumer.start();
-		
-		
-		
-		
 		
 	}
 
